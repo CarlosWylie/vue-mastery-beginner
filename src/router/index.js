@@ -16,13 +16,13 @@ const router = createRouter({
       props: route => ({ page: parseInt(route.query.page) || 1 })
     },
     {
-      path: '/event/:id',
+      path: '/events/:id',
       name: 'EventLayout',
       props: true,
       component: EventLayout,
       children: [
         {
-          path: '', 
+          path: '',
           name: 'EventDetails',
           component: EventDetails
         },
@@ -39,9 +39,18 @@ const router = createRouter({
       ]
     },
     {
-      path: '/about',
+      // match on /event/ and capture everything else in afterEvent
+      // using (.*) so that includes "/" in the match (doesn't by default)
+      path: '/event/:afterEvent(.*)',
+      redirect: () => {
+        return { path: '/events/' + to.params.afterEvent }
+      }
+    },
+    {
+      path: '/about-us',
       name: 'about',
-      component: About
+      component: About,
+      alias: '/about' // not great for seo
     }
   ]
 })
