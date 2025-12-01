@@ -44,7 +44,7 @@ const router = createRouter({
       // match on /event/ and capture everything else in afterEvent
       // using (.*) so that includes "/" in the match (doesn't by default)
       path: '/event/:afterEvent(.*)',
-      redirect: to => {
+      redirect: (to) => {
         return { path: '/events/' + to.params.afterEvent }
       }
     },
